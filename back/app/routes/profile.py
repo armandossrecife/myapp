@@ -31,7 +31,7 @@ async def get_user_profile(username: str, db: Session = Depends(banco.get_db)):
     except Exception as ex:
       raise HTTPException(status_code=500, detail=f"Internal server error. {str(ex)}")
 
-@router.get("/users/{username}/profile/{filename}", dependencies=[Depends(seguranca.get_current_user)])
+@router.get("/users/{username}/profile/{filename}")
 async def show_image_profile(filename: str, username: str, db: Session = Depends(banco.get_db)):
     user_dao = banco.UserDAO(db)
     user = user_dao.get_user(username)
