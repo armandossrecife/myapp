@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status, UploadFile
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
 from sqlalchemy.orm import Session
 from fastapi.responses import FileResponse
 from app import utilidades
@@ -48,12 +48,11 @@ async def show_image_profile(filename: str, username: str, db: Session = Depends
         raise HTTPException(status_code=500, detail=f"Internal server error. {str(e)}")
 
 @router.post("/users/{username}/profile", dependencies=[Depends(seguranca.get_current_user)])
-async def upload_image_prolife(image: UploadFile, username: str, db: Session = Depends(banco.get_db)):
+async def upload_image_prolife(username: str, image: UploadFile = File(...), db: Session = Depends(banco.get_db)):
     user_dao = banco.UserDAO(db)
     user = user_dao.get_user(username)
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-
     extension = os.path.splitext(image.filename)[1].lower()
     if extension not in utilidades.ALLOWED_EXTENSIONS:
         return HTTPException(status_code=400, detail=f"Unsupported file extension. Allowed extensions: {', '.join(utilidades.ALLOWED_EXTENSIONS)}")
