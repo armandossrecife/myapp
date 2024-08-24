@@ -31,7 +31,7 @@ def login():
             error_message = "Erro de conexão na tentativa do login"
         except IOError: 
             error_message = "Erro de IO durante o login"
-        flash(error_message, category='danger')
+        flash(error_message, 'danger')
 
         return render_template("auth/login.html")
 
@@ -82,7 +82,7 @@ def register():
             except IOError: 
                 error_message = "Erro de IO durante o login"
         
-        flash(error_message, category='danger')                
+        flash(error_message, 'danger')                
         return render_template("auth/register.html", error_message=error_message)
     return render_template("auth/register.html")
 

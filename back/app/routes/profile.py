@@ -71,7 +71,7 @@ async def upload_image_prolife(username: str, image: UploadFile = File(...), db:
         image_url = f"{utilidades.API_URL}/users/{username}/profile/{image.filename}"
       user_dao.add_profile_image_to_user(user.id, filename)
       
-      content = {"message": f"Image profile uploaded successfully: {image.filename}", 
+      content = {"message": f"Imagem do profile atualizada com sucesso!: {image.filename}", 
           "filename":image.filename,
           "id": user.id,
           "username": user.username,

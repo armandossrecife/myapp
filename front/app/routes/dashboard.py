@@ -28,7 +28,6 @@ def dashboard():
             if response_profile.status_code == 200:
                 user_data_profile = response_profile.json()
                 session['profile_image_url'] = user_data_profile['profile_image_url']
-                
             return render_template("dashboard/starter.html", user=user_data, usuario = usuario_logado, 
                 profilePic=session['profile_image_url'], titulo="Dashboard")
 
@@ -108,8 +107,8 @@ def update_profile_picture():
             if response_profile.status_code == 200:
                 user_data = response_profile.json() 
                 session['profile_image_url'] = user_data['profile_image_url']
-                return render_template("dashboard/starter.html", user=user_data, usuario = usuario_logado, 
-                    profilePic=session['profile_image_url'], titulo="Dashboard")
+                flash(user_data["message"], 'success')
+                return redirect(url_for("dashboard.dashboard"))
             else:
                 # Handle error retrieving user information
                 error_message = f"Failed to retrieve user information - {response_profile.status_code}"
@@ -180,8 +179,7 @@ def update_profile_password():
         
         if response_profile_password.status_code == 200:
             user_data = response_profile_password.json() 
-                #return render_template("dashboard/starter.html", user=user_data, usuario = usuario_logado, 
-                #    profilePic=session['profile_image_url'], titulo="Dashboard")
+            flash(user_data["message"], 'success')
             return redirect(url_for("dashboard.dashboard"))
         else:
             # Handle error retrieving user information
