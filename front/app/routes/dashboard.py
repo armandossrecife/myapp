@@ -29,7 +29,7 @@ def dashboard():
                 user_data_profile = response_profile.json()
                 session['profile_image_url'] = user_data_profile['profile_image_url']
             return render_template("dashboard/starter.html", user=user_data, usuario = usuario_logado, 
-                profilePic=session['profile_image_url'], titulo="Dashboard")
+                profilePic=session['profile_image_url'], titulo="Dashboard", funcionalidade='Main')
 
         else:
             # Handle error retrieving user information
@@ -70,7 +70,7 @@ def show_profile():
                 session['profile_image_url'] = user_data_profile['profile_image_url']
                 
                 return render_template("dashboard/profile.html", user=user_data, usuario = usuario_logado, 
-                profilePic=session['profile_image_url'], titulo="Profile")
+                profilePic=session['profile_image_url'], titulo="Dashboard", funcionalidade="Profile")
 
         else:
             # Handle error retrieving user information
@@ -142,7 +142,7 @@ def show_page_password():
             user_data = response.json()            
                 
             return render_template("dashboard/profile_password.html", user=user_data, usuario = usuario_logado, 
-                profilePic=session['profile_image_url'], titulo="Dashboard")
+                profilePic=session['profile_image_url'], titulo="Dashboard", funcionalidade="Password")
 
         else:
             # Handle error retrieving user information

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C7607mNMQiu13Bg+V4i6ZqOG3X/E7qNICu60Q7d3d610006709015712/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <header class="navbar sticky-top container-fluid d-flex flex-wrap align-items-center justify-content-between py-0 bg-light">
+        <h1 class="fs-4">My App</h1>
+        <div class="d-flex align-items-center dropdown">
+          <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="{{ profilePic }}" alt="hugenerd" class="me-1 img-thumbnail rounded-circle" style="width: 40px; height: 40px;">
+              <span class="text-muted">{{ user.username }}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">                      
+              <li><a class="dropdown-item" href="{{ url_for('dashboard.show_profile') }}">Profile</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('dashboard.show_page_password') }}">Password</a></li>
+              <li><a class="dropdown-item" href="#">Configurações</a></li>
+              <li>
+                  <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Sair</a></li>
+          </ul>
+        </div>
+    </header>
+
+    <div>
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb p-1 bg-body-tertiary rounded-3">
+            <li class="breadcrumb-item "><a href="{{ url_for('dashboard.dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ funcionalidade }}</li>
+          </ol>
+      </nav>
+    </div>    
+
+    {% for category, message in get_flashed_messages(with_categories=True) %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+
+    <div class="container-fluid">
+    
+      <div class="row flex-nowrap">
+          
+          <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+              
+              <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                                    
+                  <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+
+                      <li class="nav-item">
+                          <a href="#" class="nav-link align-middle px-0">
+                              <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Anotações</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                              <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Gráficos</span> 
+                          </a>
+                          <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                              <li class="w-100">
+                                  <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">My Time</span></a>
+                              </li>
+                              <li>
+                                  <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">My Plot</span></a>
+                              </li>
+                          </ul>
+                      </li>
+                  <hr>
+              </div>
+          </div>
+
+          <main class="col-md-9 col-lg-10">
+            {% block maincontent %}
+            {% endblock %}
+          </main>
+
+      </div>
+  </div>
+
+</body>
+</html>
