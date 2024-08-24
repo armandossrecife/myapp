@@ -101,3 +101,23 @@ class UserDAO:
       self.db.commit()
     except Exception as e:
       raise ValueError(f"Error adding profile image: {str(e)}")
+
+  def update_password_user(self, user_id: int, new_password: str):
+    """
+    Updates the password for a user identified by user_id.
+
+    Args:
+        user_id: The ID of the user to update.
+        new_password: The new password for the user.
+    """
+    try:
+      user = self.get_user_by_id(user_id)
+      if not user:
+        raise ValueError(f"Usuário {user_id} inválido")
+      hashed_password = utilidades.hash_password(new_password)
+      user.password_hash = hashed_password
+      self.db.merge(user)
+      self.db.commit()
+      self.db.refresh(user)
+    except Exception as ex:
+      raise ValueError(f"Error updating user: {str(ex)}")

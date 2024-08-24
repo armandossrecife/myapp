@@ -6,6 +6,7 @@ from app import banco
 from app import seguranca
 import mimetypes
 import os
+from app import entidades
 
 router = APIRouter()
 
@@ -79,5 +80,32 @@ async def upload_image_prolife(username: str, image: UploadFile = File(...), db:
           }
       return content
 
+    except Exception as ex:
+      raise HTTPException(status_code=500, detail=f"Internal server error. {str(ex)}")
+
+@router.post("/users/{username}/password", dependencies=[Depends(seguranca.get_current_user)])
+async def update_password(user_password: entidades.UserPassword, db: Session = Depends(banco.get_db)):
+    user_dao = banco.UserDAO(db)
+    user = user_dao.get_user(user_password.username)
+    user_id = user.id
+
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
+    try: 
+      # confirma o password passado nos dados no formulario
+      if user_password.password == user_password.confirm_password:     
+        # faz a logica que atuliza o password no banco
+        user_dao.update_password_user(user_id, user_password.password)
+        print("O password foi atualizado com sucesso!")
+        content = {"message": f"Password atualizado com sucesso!", 
+              "id": user.id,
+              "username": user.username,
+              "email": user.email
+          }
+        return content
+      else:
+        print("Password inválido!")
+        return {"message":"Password inválido!"}
     except Exception as ex:
       raise HTTPException(status_code=500, detail=f"Internal server error. {str(ex)}")
