@@ -7,6 +7,10 @@ import uuid
 from fastapi.responses import FileResponse
 import utilidades
 import os
+from app.processamento import tarefas as processamento_tarefas
+from app.processamento import jobs as processamento_jobs
+from datetime import datetime
+import json
 
 app = FastAPI()
 
@@ -53,6 +57,30 @@ def download_file(file_name: str):
         raise HTTPException(status_code=404, detail="File not found")
     return FileResponse(file_path)
 
+@app.get("/mytasks")
+def show_graph_tasks():
+    # Criar as tarefas (exemplo com lista de dicionários)
+    tarefas = [
+        {"descricao": "Tarefa 1", "data_expiracao": processamento_tarefas.add_days(datetime.now(), 5), "prioridade": 1},
+        {"descricao": "Tarefa 2", "data_expiracao": processamento_tarefas.add_days(datetime.now(), 10), "prioridade": 2},
+        {"descricao": "Tarefa 3", "data_expiracao": processamento_tarefas.add_days(datetime.now(), 15), "prioridade": 3}
+    ]
+
+    # Criar os registros
+    tarefas_DTO_exemplo = processamento_tarefas.criar_registros_tarefas_DTO(tarefas)
+    return tarefas_DTO_exemplo
+
+@app.get("/myjobs")
+def show_graph_jobs():
+    jobs = [
+        {"task": "Job A", "start": "2009-01-01", "finish": "2009-02-28"},
+        {"task": "Job B", "start": "2009-03-01", "finish": "2009-03-28"},
+        {"task": "Job C", "start": "2009-04-01", "finish": "2009-04-28"},
+        {"task": "Job D", "start": "2009-05-01", "finish": "2009-05-28"}
+    ]
+
+    jobs_DTO_exemplo = processamento_jobs.criar_registros_job_DTO(jobs)
+    return jobs_DTO_exemplo
 
 if __name__ == "__main__":
   uvicorn.run(app, host="0.0.0.0", port=8000)
