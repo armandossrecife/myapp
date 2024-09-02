@@ -1,12 +1,13 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from app import banco
 from app import entidades
-from app.routes import auth, users, profile
+from app.routes import auth, users, profile, tarefas
 import uvicorn
 import uuid
 from fastapi.responses import FileResponse
 import utilidades
 import os
+from app.processamento import jobs as processamento_jobs
 
 app = FastAPI()
 
@@ -25,6 +26,7 @@ print(f"Usuário {my_user.username} criado com sucesso!")
 app.include_router(auth.router)
 app.include_router(users.router)
 app.include_router(profile.router)
+app.include_router(tarefas.router)
 
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
@@ -53,6 +55,17 @@ def download_file(file_name: str):
         raise HTTPException(status_code=404, detail="File not found")
     return FileResponse(file_path)
 
+@app.get("/myjobs")
+def show_graph_jobs():
+    jobs = [
+        {"task": "Job A", "start": "2009-01-01", "finish": "2009-02-28"},
+        {"task": "Job B", "start": "2009-03-01", "finish": "2009-03-28"},
+        {"task": "Job C", "start": "2009-04-01", "finish": "2009-04-28"},
+        {"task": "Job D", "start": "2009-05-01", "finish": "2009-05-28"}
+    ]
+
+    jobs_DTO_exemplo = processamento_jobs.criar_registros_job_DTO(jobs)
+    return jobs_DTO_exemplo
 
 if __name__ == "__main__":
   uvicorn.run(app, host="0.0.0.0", port=8000)
