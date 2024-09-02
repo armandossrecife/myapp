@@ -4,6 +4,7 @@ import os
 import utilidades
 from app.routes import auth
 from app.routes import dashboard
+from app.routes import tarefas
 
 app = Flask(__name__)
 app.secret_key = "my_secret_key"
@@ -26,10 +27,13 @@ url_servico_download = f"{FASTAPI_URL}/download"
 #Registra os Blueprints
 app.register_blueprint(auth.auth_bp)
 app.register_blueprint(dashboard.dashboard_bp)
+app.register_blueprint(tarefas.tarefas_bp)
 
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(STATIC_PATH, 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+# Recursos Publicos
 
 @app.route('/')
 def index():
