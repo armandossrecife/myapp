@@ -1,0 +1,14 @@
+
+{% extends "base_dashboard.html" %}
+
+{% block maincontent %}
+
+<h3>Exemplo de gráfico dinâmico de tarefas ao longo do tempo</h3> 
+<div class="container" id="graph1"></div>
+<script>
+    var graph1 = {{ graphJSON | safe }};
+    Plotly.newPlot('graph1', graph1);
+</script>
+<a href="{{ url_for('dashboard.dashboard')}}">[Home]</a>
+
+{% endblock %}
