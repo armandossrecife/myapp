@@ -7,8 +7,8 @@ Aplicação modelo para servir de referência para aplicações web python. Exem
 ## Contextos
 
 A aplicação é dividida em dois contextos principais: 
-- Back-end
-- Front-end
+- [Back-end](https://github.com/armandossrecife/myapp/tree/main/back)
+- [Front-end](https://github.com/armandossrecife/myapp/tree/main/front)
 
 A aplicação back-end é feita usando o web framework FastAPI.
 
