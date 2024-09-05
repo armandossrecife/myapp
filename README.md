@@ -2,7 +2,7 @@
 
 Aplicação modelo para servir de referência para aplicações web python. Exemplo de Protótipo de Aplicação Web (Prova de Conceito) de CRUD de usuários, anotações, tarefas, trabalhos e arquivos dos usuários.
 
-[Quadro de Atividades do Projeto](?)
+[Quadro de Atividades do Projeto](https://github.com/users/armandossrecife/projects/4/views/1)
 
 ## Contextos
 
