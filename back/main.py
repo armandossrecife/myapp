@@ -1,7 +1,7 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from app import banco
 from app import entidades
-from app.routes import auth, users, profile, tarefas, jobs
+from app.routes import auth, users, profile, tarefas, jobs, notas
 import uvicorn
 import uuid
 from fastapi.responses import FileResponse
@@ -21,12 +21,23 @@ user_dao = banco.UserDAO(db)
 user_dao.create_user(my_user)
 print(f"Usuário {my_user.username} criado com sucesso!")
 
+user_teste = user_dao.get_user("armando")
+
+note_dao = banco.NoteDAO(db)
+note_dao.create_note(user_teste.id, 'Note 1')
+note_dao.create_note(user_teste.id, 'Note 2')
+print(f"Notas criadas com sucesso!")
+notes = note_dao.get_all_notes()
+for nota in notes:
+    print(f"Nota: {nota.description}")
+
 # Include das rotas da aplicacao
 app.include_router(auth.router)
 app.include_router(users.router)
 app.include_router(profile.router)
 app.include_router(tarefas.router)
 app.include_router(jobs.router)
+app.include_router(notas.router)
 
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
