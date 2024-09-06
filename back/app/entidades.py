@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 class User(BaseModel):
   id: int
@@ -14,3 +15,9 @@ class UserPassword(BaseModel):
   username: str
   password: str
   confirm_password: str
+
+class Note(BaseModel):
+  id: int
+  description: str
+  created_at: datetime
+  user_id: int

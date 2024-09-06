@@ -1,0 +1,28 @@
+{% extends "base_dashboard.html" %}
+
+{% block maincontent %}
+
+<div class="container">
+    <table>
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Data de Criação</th>
+                    <th>Usuario</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for nota in notas %}
+                <tr>
+                    <td>{{ nota.description }}</td>
+                    <td>{{ nota.created_at}}</td>
+                    <td>{{ nota.user_id}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('dashboard.dashboard')}}">[Home]</a>
+
+</div>
+
+{% endblock %}

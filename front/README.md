@@ -2,7 +2,7 @@
 
 Contexto referente a interação (UI) com o usuário final da Aplicação MyApp.
 
-[Quadro de Atividades do contexto back-end](?)
+[Quadro de Atividades do contexto front-end](?)
 
 # A. Estrutura da aplicação front-end
 
@@ -76,7 +76,6 @@ package "App" <<Cloud>> {
 }
 [Controllers] ..> [Templates]
 [Controllers] ..> [Models]
-[Controllers] ..> [Repositories]
 @enduml
 ```
 

@@ -6,6 +6,7 @@ from app.routes import auth
 from app.routes import dashboard
 from app.routes import tarefas
 from app.routes import jobs
+from app.routes import notas
 
 app = Flask(__name__)
 app.secret_key = "my_secret_key"
@@ -30,6 +31,7 @@ app.register_blueprint(auth.auth_bp)
 app.register_blueprint(dashboard.dashboard_bp)
 app.register_blueprint(tarefas.tarefas_bp)
 app.register_blueprint(jobs.jobs_bp)
+app.register_blueprint(notas.notas_bp)
 
 @app.route('/favicon.ico')
 def favicon():
