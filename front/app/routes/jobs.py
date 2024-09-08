@@ -29,7 +29,6 @@ def my_jobs_graphic():
             if response_myjobs.status_code == 200:
                 user_data_jobs = response_myjobs.json()
                 df = pd.DataFrame(user_data_jobs)
-                print(df)
                 fig = px.timeline(df, x_start="start", x_end="finish", y="task")
                 fig.update_yaxes(autorange="reversed")
                 return render_template('jobs/grafico_jobs.html', graphJSON=fig.to_json(), 

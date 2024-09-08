@@ -16,7 +16,8 @@ banco.create_tables()
 # Cria um usuario default
 my_user = entidades.User(id=0, username="armando", email="armando@ufpi.edu.br", password="armando")
 
-db = banco.get_db()
+#db = banco.get_db() TODO: revisar a manipulacao da conexao com o database
+db = banco.SessionLocal()
 user_dao = banco.UserDAO(db)
 user_dao.create_user(my_user)
 print(f"Usuário {my_user.username} criado com sucesso!")

@@ -18,7 +18,7 @@ def create_tables():
 def get_db():
   db = SessionLocal()
   try:
-    return db # TODO: revisar o fechamento das sessoes de banco abertas na instancia da aplicacao
+    yield db # TODO: revisar o fechamento das sessoes de banco abertas na instancia da aplicacao
   finally:
     db.close()
 
@@ -125,15 +125,17 @@ class UserDAO:
 
 # DAO (Data Access Object) for Note model
 class NoteDAO:
-    def __init__(self, session):
-        self.session = session
+    def __init__(self, db):
+        self.db = db
 
     def create_note(self, user_id, description):
+        db = SessionLocal()
         new_note = None
         try:
             new_note = modelos.Note(description=description, user_id=user_id)
-            self.session.add(new_note)
-            self.session.commit()
+            db.add(new_note)
+            db.commit()
+            db.refresh(new_note)
         except SQLAlchemyError as sqlerror:
             print(type(sqlerror))
             self.session.rollback()
@@ -141,31 +143,31 @@ class NoteDAO:
         return new_note
 
     def get_all_notes(self):
-        notas = self.session.query(modelos.Note).all()
+        notas = self.db.query(modelos.Note).all()
         return [entidades.Note(id=nota.id, description=nota.description, created_at=nota.created_at, user_id=nota.user_id) for nota in notas]
 
     def get_note_by_id(self, note_id):
-      nota = self.session.query(modelos.Note).filter_by(id=note_id).first()
+      nota = self.db.query(modelos.Note).filter_by(id=note_id).first()
       return entidades.Note(id=nota.id, description=nota.description, created_at=nota.created_at, user_id=nota.user_id)
 
     def get_notes_by_user_id(self, user_id):
-        notas = self.session.query(modelos.Note).filter_by(user_id=user_id).all() 
+        notas = self.db.query(modelos.Note).filter_by(user_id=user_id).all() 
         return [entidades.Note(id=nota.id, description=nota.description, created_at=nota.created_at, user_id=nota.user_id) for nota in notas]
 
     def update_note(self, note_id, description):
-        note = self.session.get(modelos.Note, note_id)
+        note = self.db.get(modelos.Note, note_id)
         if note:
             note.description = description
-            self.session.commit()
+            self.db.commit()
             return entidades.Note(id=note.id, description=note.description, created_at=note.created_at, user_id=note.user_id)
         else:
             return None
 
     def delete_note(self, note_id):
-        note = self.session.get(modelos.Note, note_id)
+        note = self.db.get(modelos.Note, note_id)
         if note:
-            self.session.delete(note)
-            self.session.commit()
+            self.db.delete(note)
+            self.db.commit()
             return True
         else:
             return False

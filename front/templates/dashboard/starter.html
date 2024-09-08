@@ -1,31 +1,37 @@
 {% extends "base_dashboard.html" %}
 
 {% block maincontent %}
-<div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-    <div class="feature col">
-        <h3 class="fs-2 text-body-emphasis">Anotações</h3>
-        <p>Registro das notas do usuario.</p>
-        <a href="{{ url_for('notas.my_notas') }}" class="icon-link">
-            Lista as Anotações
-        </a>
-    </div>
-    
-    <div class="feature col">
-      <h3 class="fs-2 text-body-emphasis">Minhas Tarefas</h3>
-      <p>Registro das tarefas do usuário. Cada tarefa tem as seguintes informações: descrição, data de conclusão, data de expiração, prioridade e informação se a tarefa foi concluída. </p>
-      <a href="{{ url_for('tarefas.my_tasks') }}" class="icon-link">
-        Lista as Tarefas
-      </a>      
-    </div>
-    
-    <div class="feature col">
-      <h3 class="fs-2 text-body-emphasis">Meus Trabalhos</h3>
-      <p>Registros dos trabalhos do usuário. Um trabalho é um conjunto de tarefas, onde cada trabalho tem: tarefas a serem realizadas, data de início e data de fim do trabalho. </p>
-      <a href="{{ url_for('jobs.my_jobs') }}" class="icon-link">
-        Lista os Trabalhos
-      </a>
+<div class="row g-4 py-0 row-cols-1 row-cols-lg-3">
+    <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Anotações</h4>
+          <p>Registro das notas do usuario.</p>
+          <a href="{{ url_for('notas.my_notas') }}" class="icon-link">
+              Lista as Anotações
+          </a>
+        </div>
     </div>
 
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Trabalhos</h4>
+        <p>Registros dos trabalhos do usuário. Um trabalho é um conjunto de tarefas, onde cada trabalho tem: tarefas a serem realizadas, data de início e data de fim do trabalho. </p>
+        <a href="{{ url_for('jobs.my_jobs') }}" class="icon-link">
+          Lista os Trabalhos
+        </a>
+      </div>
+    </div>    
+
+    <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Tarefas</h4>
+          <p>Registro das tarefas do usuário. Cada tarefa tem as seguintes informações: descrição, data de conclusão, data de expiração, prioridade e informação se a tarefa foi concluída. </p>
+          <a href="{{ url_for('tarefas.my_tasks') }}" class="icon-link">
+            Lista as Tarefas
+          </a>   
+        </div>   
+    </div>
+    
   </div>
 
   {% endblock %}

@@ -3,26 +3,32 @@
 {% block maincontent %}
 
 <div class="container">
-    <table>
-            <thead>
-                <tr>
-                    <th>Task</th>
-                    <th>Start</th>
-                    <th>Finish</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for job in jobs %}
-                <tr>
-                    <td>{{ job.task }}</td>
-                    <td>{{ job.start }}</td>
-                    <td>{{ job.finish }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="{{ url_for('dashboard.dashboard')}}">[Home]</a>
-
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Meus Trabalhos</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                            <th>Task</th>
+                            <th>Start</th>
+                            <th>Finish</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr>
+                            <td>{{ job.task }}</td>
+                            <td>{{ job.start }}</td>
+                            <td>{{ job.finish }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{ url_for('dashboard.dashboard')}}">[Home]</a>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
