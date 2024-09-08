@@ -2,7 +2,7 @@
 
 Contexto referente a interação (UI) com o usuário final da Aplicação MyApp.
 
-[Quadro de Atividades do contexto front-end](?)
+[Quadro de Atividades do contexto front-end](https://github.com/users/armandossrecife/projects/6)
 
 # A. Estrutura da aplicação front-end
 
