@@ -3,12 +3,19 @@
 
 {% block maincontent %}
 
-<h3>Exemplo de gráfico dinâmico de tarefas ao longo do tempo</h3> 
-<div class="container" id="graph1"></div>
-<script>
-    var graph1 = {{ graphJSON | safe }};
-    Plotly.newPlot('graph1', graph1);
-</script>
-<a href="{{ url_for('dashboard.dashboard')}}">[Home]</a>
+<div class="container">
+    <div class="card-header">
+        <h5 class="card-title">Exemplo de gráfico dinâmico dos trabalhos ao longo do tempo</h5>
+    </div>
+    <div class="card-body">
+        <div class="container" id="graph1">
+            <script>
+                var graph1 = {{ graphJSON | safe }};
+                Plotly.newPlot('graph1', graph1);
+            </script>
+            <a href="{{ url_for('dashboard.dashboard')}}">[Home]</a>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

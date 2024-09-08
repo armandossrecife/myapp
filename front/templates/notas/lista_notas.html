@@ -3,26 +3,32 @@
 {% block maincontent %}
 
 <div class="container">
-    <table>
-            <thead>
-                <tr>
-                    <th>Descrição</th>
-                    <th>Data de Criação</th>
-                    <th>Usuario</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for nota in notas %}
-                <tr>
-                    <td>{{ nota.description }}</td>
-                    <td>{{ nota.created_at}}</td>
-                    <td>{{ nota.user_id}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="{{ url_for('dashboard.dashboard')}}">[Home]</a>
-
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Minhas Anotações</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Data de Criação</th>
+                        <th>Usuario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for nota in notas %}
+                    <tr>
+                        <td>{{ nota.description }}</td>
+                        <td>{{ nota.created_at}}</td>
+                        <td>{{ nota.user_id}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{ url_for('dashboard.dashboard')}}">[Home]</a>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
