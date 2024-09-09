@@ -68,13 +68,13 @@ TBD
 
 Aqui estão as principais tecnologias e frameworks utilizados na aplicação:
 
-**FastAPI**: É um framework web em Python utilizado para desenvolvimento de aplicações web. Ele fornece recursos para gerenciamento de rotas,  manipulação de requisições e muito mais. É a base da aplicação e permite a criação de uma API web de forma simples e eficiente.
+**FastAPI**: O [FastAPI](https://fastapi.tiangolo.com) um framework web em Python utilizado para desenvolvimento de aplicações web. Ele fornece recursos para gerenciamento de rotas,  manipulação de requisições e muito mais. É a base da aplicação e permite a criação de uma API web de forma simples e eficiente.
 
-**SQLite**: SQLite é um banco de dados relacional embutido utilizado para armazenar os dados dos usuários cadastrados na aplicação. É uma opção leve e prática para aplicações de pequeno a médio porte.
+**SQLAlchemy**: O [SQLAlchemy](https://www.sqlalchemy.org) é uma poderosa biblioteca Python para trabalhar com bancos de dados. Ela fornece um ORM (Object-Relational Mapper) de alto nível que permite que você interaja com tabelas de banco de dados como se fossem objetos Python. Isso torna mais fácil escrever aplicações orientadas a banco de dados em Python. Mais detalhes em na documentação oficial do [FastAPI/sql-databases](https://fastapi.tiangolo.com/tutorial/sql-databases). 
 
-**HTML**: [HTML](https://en.wikipedia.org/wiki/HTML) (Hypertext Markup Language) é a linguagem de marcação utilizada para estruturar e organizar o conteúdo das páginas web. É a base para a criação dos templates HTML da aplicação.
+**SQLite**: O [SQLite](https://www.sqlite.org) é um banco de dados relacional embutido utilizado para armazenar os dados dos usuários cadastrados na aplicação. É uma opção leve e prática para aplicações de pequeno a médio porte.
 
-**CSS**: [CSS](https://en.wikipedia.org/wiki/CSS) (Cascading Style Sheets) é uma linguagem utilizada para estilizar e formatar as páginas web. É utilizada para definir o layout, cores, fontes e outros aspectos visuais da aplicação.
+**OAuth**: [OAuth 2.0](https://en.wikipedia.org/wiki/OAuth) é um framework de autorização que permite aos usuários conceder acesso aos seus dados para aplicativos de terceiros sem compartilhar suas credenciais. É comumente usado para autenticação e autorização em aplicações web e APIs.
 
 **JWT**: [JWT](https://jwt.io) (JSON Web Token) é um método padrão para transmitir informações de forma segura entre partes como um objeto JSON. É amplamente utilizado para autenticação e autorização em aplicações web.
 
