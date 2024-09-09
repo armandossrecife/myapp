@@ -121,7 +121,15 @@ Aqui estão as principais tecnologias e frameworks utilizados na aplicação:
 
 **CSS**: [CSS](https://en.wikipedia.org/wiki/CSS) (Cascading Style Sheets) é uma linguagem utilizada para estilizar e formatar as páginas web. É utilizada para definir o layout, cores, fontes e outros aspectos visuais da aplicação.
 
-**Bootstrap:** é um framework front-end gratuito e de código aberto que proporciona uma maneira rápida e fácil de criar interfaces de usuário responsivas para sites e aplicativos web. Ele oferece um conjunto abrangente de componentes pré-construídos, como botões, formulários, grids, navegação e muito mais, que você pode personalizar e combinar para criar designs modernos e profissionais.
+**JavaScript**: O [JavaScript](https://en.wikipedia.org/wiki/JavaScript) é uma linguagem de programação versátil que é principalmente usada para adicionar interatividade e recursos dinâmicos a páginas web. Ele é executado diretamente no navegador web, permitindo atualizações em tempo real e interações do usuário sem exigir um recarregamento completo da página.
+
+**Bootstrap:** O [Bootstrap](https://getbootstrap.com) é um framework front-end gratuito e de código aberto que proporciona uma maneira rápida e fácil de criar interfaces de usuário responsivas para sites e aplicativos web. Ele oferece um conjunto abrangente de componentes pré-construídos, como botões, formulários, grids, navegação e muito mais, que você pode personalizar e combinar para criar designs modernos e profissionais.
+
+**Pandas**: O [Pandas](https://pandas.pydata.org) é uma poderosa biblioteca Python para análise e manipulação de dados. Ela fornece estruturas de dados de alto desempenho e ferramentas de análise de dados que facilitam o trabalho com dados estruturados e tabulares.
+
+**Plotly**: O [Plotly](https://plotly.com/python) é uma poderosa biblioteca Python para criar visualizações interativas. Ele oferece uma ampla variedade de tipos de gráficos, incluindo gráficos de linhas, gráficos de dispersão, histogramas, gráficos de barras e muito mais. O Plotly é conhecido por sua capacidade de criar gráficos visualmente atraentes e interativos que podem ser facilmente compartilhados e incorporados em aplicações web. 
+
+**Selenium-python**: [Selenium-python](https://selenium-python.readthedocs.io) é uma poderosa biblioteca Python usada para automatizar interações com navegadores web. Ela permite que você simule ações do usuário, como clicar em botões, preencher formulários e navegar entre páginas web. Isso a torna uma ferramenta valiosa para testes web, web scraping e automação de navegadores.
 
 **PlantUML**: [PlantUML](https://en.wikipedia.org/wiki/PlantUML) é uma ferramenta para criação de diagramas UML de forma textual. Foi utilizado para gerar os diagramas de componentes e camadas da aplicação.
 
