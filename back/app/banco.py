@@ -31,15 +31,16 @@ class UserDAO:
     try: 
       user = self.db.query(modelos.UserDB).filter(modelos.UserDB.username == username).first()
       return user
-    except Exception as ex:
-        raise ValueError(f'Erro ao consultar usuario {username}: {str(ex)}')
+    except SQLAlchemyError as sqlerror:
+      raise ValueError(f'Erro ao consultar usuario {username}: {str(sqlerror)}')
      
   def get_user_by_id(self, user_id: int):
     try:
       user = self.db.query(modelos.UserDB).filter(modelos.UserDB.id == user_id).first()
       return user
-    except Exception as ex:
-        raise ValueError(f"Erro ao consultar usuario: {str(ex)}")
+    except SQLAlchemyError as sqlerror:
+      print(type(sqlerror))
+      raise ValueError(f"Erro ao consultar usuario: {str(sqlerror)}")
 
   def create_user(self, user: entidades.User):
     try:
@@ -50,6 +51,9 @@ class UserDAO:
       db.commit()
       db.refresh(db_user)
       return entidades.User(id=db_user.id, username=db_user.username, email=db_user.email, password=user.password)
+    except SQLAlchemyError as sqlerror:
+      print(type(sqlerror))
+      raise ValueError(f"Erro ao criar usuário: {str(sqlerror)}")
     except Exception as ex:
       raise ValueError(f"Erro ao criar usuário: {str(ex)}")
 
@@ -61,6 +65,9 @@ class UserDAO:
       if not utilidades.verify_password(password, user.password_hash):
         return False
       return user
+    except SQLAlchemyError as sqlerror:
+      print(type(sqlerror))
+      raise ValueError(f"Erro ao autenticar usuário: {str(sqlerror)}")
     except Exception as ex:
       raise ValueError(f"Erro ao autenticar usuário: {str(ex)}")
 
@@ -74,6 +81,9 @@ class UserDAO:
     try:
       users = self.db.query(modelos.UserDB).all()
       return [entidades.User(id=user.id, username=user.username, email=user.email, password="?") for user in users]
+    except SQLAlchemyError as sqlerror:
+      print(type(sqlerror))
+      raise ValueError(f"Erro ao recuperar usuários: {str(sqlerror)}")
     except Exception as ex:
       raise ValueError(f"Erro ao recuperar usuários: {str(ex)}")
 
@@ -85,8 +95,9 @@ class UserDAO:
         return image_name
       else:
         return "default.png"
-    except Exception as ex:
-      raise ValueError(f'Erro ao fazer a busca da imagem {str(ex)}')
+    except SQLAlchemyError as sqlerror:
+      print(type(sqlerror))
+      raise ValueError(f'Erro ao fazer a busca da imagem {str(sqlerror)}')
 
   def add_profile_image_to_user(self, user_id: int, filename: str):
     try:
@@ -100,8 +111,10 @@ class UserDAO:
           new_image = modelos.ImageProfile(user_id=user_id, name=filename)
           self.db.add(new_image)
       self.db.commit()
-    except Exception as e:
-      raise ValueError(f"Error adding profile image: {str(e)}")
+    except SQLAlchemyError as sqlerror:
+      print(type(sqlerror))
+      self.db.rollback()
+      raise ValueError(f"Error adding profile image: {str(sqlerror)}")
 
   def update_password_user(self, user_id: int, new_password: str):
     """
@@ -120,8 +133,10 @@ class UserDAO:
       self.db.merge(user)
       self.db.commit()
       self.db.refresh(user)
-    except Exception as ex:
-      raise ValueError(f"Error updating user: {str(ex)}")
+    except SQLAlchemyError as sqlerror:
+      print(type(sqlerror))
+      self.db.rollback()
+      raise ValueError(f"Error updating user: {str(sqlerror)}")
 
 # DAO (Data Access Object) for Note model
 class NoteDAO:
@@ -138,23 +153,36 @@ class NoteDAO:
             db.refresh(new_note)
         except SQLAlchemyError as sqlerror:
             print(type(sqlerror))
-            self.session.rollback()
+            self.db.rollback()
             raise Exception(f'Erro ao criar nota: {str(sqlerror)}')
         return new_note
 
     def get_all_notes(self):
-        notas = self.db.query(modelos.Note).all()
-        return [entidades.Note(id=nota.id, description=nota.description, created_at=nota.created_at, user_id=nota.user_id) for nota in notas]
+        try:
+          notas = self.db.query(modelos.Note).all()
+          return [entidades.Note(id=nota.id, description=nota.description, created_at=nota.created_at, user_id=nota.user_id) for nota in notas]
+        except SQLAlchemyError as sqlerror:
+          print(type(sqlerror))
+          raise ValueError(f"Erro ao listar notas do usuário: {str(sqlerror)}")
 
     def get_note_by_id(self, note_id):
-      nota = self.db.query(modelos.Note).filter_by(id=note_id).first()
-      return entidades.Note(id=nota.id, description=nota.description, created_at=nota.created_at, user_id=nota.user_id)
-
+      try: 
+        nota = self.db.query(modelos.Note).filter_by(id=note_id).first()
+        return entidades.Note(id=nota.id, description=nota.description, created_at=nota.created_at, user_id=nota.user_id)
+      except SQLAlchemyError as sqlerror:
+        print(type(sqlerror))
+        raise ValueError(f"Erro ao recuperar nota por id: {str(sqlerror)}")
+      
     def get_notes_by_user_id(self, user_id):
+      try:
         notas = self.db.query(modelos.Note).filter_by(user_id=user_id).all() 
         return [entidades.Note(id=nota.id, description=nota.description, created_at=nota.created_at, user_id=nota.user_id) for nota in notas]
-
+      except SQLAlchemyError as sqlerror:
+        print(type(sqlerror))
+        raise ValueError(f"Erro ao recuperar notas do usuario: {str(sqlerror)}")
+      
     def update_note(self, note_id, description):
+      try:
         note = self.db.get(modelos.Note, note_id)
         if note:
             note.description = description
@@ -162,8 +190,13 @@ class NoteDAO:
             return entidades.Note(id=note.id, description=note.description, created_at=note.created_at, user_id=note.user_id)
         else:
             return None
+      except SQLAlchemyError as sqlerror:
+        print(type(sqlerror))
+        self.db.rollback()
+        raise ValueError(f"Erro ao atualizar nota: {str(sqlerror)}")
 
     def delete_note(self, note_id):
+      try: 
         note = self.db.get(modelos.Note, note_id)
         if note:
             self.db.delete(note)
@@ -171,3 +204,7 @@ class NoteDAO:
             return True
         else:
             return False
+      except SQLAlchemyError as sqlerror:
+        print(type(sqlerror))
+        self.db.rollback()
+        raise ValueError(f"Erro ao deletar nota: {str(sqlerror)}")
