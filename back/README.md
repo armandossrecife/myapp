@@ -108,3 +108,11 @@ Existem vários tipos de testes de software que podem ser aplicados durante o pr
 É realizado para verificar se as unidades individuais de código (geralmente funções, métodos ou classes) funcionam corretamente. O objetivo é testar cada unidade isoladamente para identificar possíveis erros lógicos ou funcionais. Geralmente, é executado pelos desenvolvedores.
 
 [Casos de Testes Unitários](?)
+
+### Execução dos testes unitários
+
+```bash
+python3 test_runner.py
+```
+
+O resultado dos testes unitários será salvo no diretório back/resultados
