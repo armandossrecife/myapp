@@ -187,6 +187,7 @@ class NoteDAO:
         if note:
             note.description = description
             self.db.commit()
+            self.db.refresh(note)
             return entidades.Note(id=note.id, description=note.description, created_at=note.created_at, user_id=note.user_id)
         else:
             return None
