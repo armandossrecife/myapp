@@ -21,3 +21,7 @@ class Note(BaseModel):
   description: str
   created_at: datetime
   user_id: int
+
+class NewNote(BaseModel):
+  description: str
+  username: str
