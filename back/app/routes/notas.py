@@ -16,7 +16,7 @@ async def get_user_notes(username: str, db: Session = Depends(banco.get_db)):
         if not user:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
-        notas = notas_dao.get_all_notes()
+        notas = notas_dao.get_notes_by_user_id(user.id)
         return notas
     except Exception as ex:
       raise HTTPException(status_code=500, detail=f"Internal server error. {str(ex)}")
