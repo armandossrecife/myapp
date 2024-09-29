@@ -53,6 +53,7 @@ class UserDAO:
       return entidades.User(id=db_user.id, username=db_user.username, email=db_user.email, password=user.password)
     except SQLAlchemyError as sqlerror:
       print(type(sqlerror))
+      self.db.rollback()
       raise ValueError(f"Erro ao criar usuário: {str(sqlerror)}")
     except Exception as ex:
       raise ValueError(f"Erro ao criar usuário: {str(ex)}")

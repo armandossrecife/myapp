@@ -7,11 +7,11 @@ from datetime import datetime
 
 router = APIRouter()
 
-@router.get("/users/{username}/tasks", dependencies=[Depends(seguranca.get_current_user)])
-async def get_user_tasks(username: str, db: Session = Depends(banco.get_db)):
+@router.get("/users/{user_id}/tasks", dependencies=[Depends(seguranca.get_current_user)])
+async def get_user_tasks(user_id: int, db: Session = Depends(banco.get_db)):
     try: 
         user_dao = banco.UserDAO(db)
-        user = user_dao.get_user(username)
+        user = user_dao.get_user_by_id(user_id)
         if not user:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 

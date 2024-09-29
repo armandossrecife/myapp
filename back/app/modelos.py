@@ -1,5 +1,5 @@
 import sqlalchemy
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from sqlalchemy import ForeignKey
 from datetime import datetime
 from sqlalchemy.orm import relationship
@@ -12,6 +12,9 @@ class UserDB(Base):
   username = Column(String, unique=True, index=True)
   email = Column(String, unique=True, index=True)
   password_hash = Column(String)
+  is_active = Column(Boolean, default=True)
+  created_at = Column(DateTime, default=datetime.now)
+  updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
   # Cria um relacionamento com a classe Note
   notes = relationship("Note")
 
@@ -28,6 +31,7 @@ class Note(Base):
     __tablename__ = "notes"
     id = Column(Integer, primary_key=True) 
     description = Column(String(1000))
-    created_at = Column(DateTime, default=datetime.now())
+    created_at = Column(DateTime, default=datetime.now)
+    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
     # Define a chave estrangeira (FK) para a tabela users
     user_id = Column(Integer, ForeignKey("users.id"))

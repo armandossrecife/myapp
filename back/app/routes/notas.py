@@ -6,13 +6,13 @@ from app import entidades
 
 router = APIRouter()
 
-@router.get("/users/{username}/notes", dependencies=[Depends(seguranca.get_current_user)], response_model=list[entidades.Note])
-async def get_user_notes(username: str, db: Session = Depends(banco.get_db)):
+@router.get("/users/{user_id}/notes", dependencies=[Depends(seguranca.get_current_user)], response_model=list[entidades.Note])
+async def get_user_notes(user_id: int, db: Session = Depends(banco.get_db)):
     try: 
         user_dao = banco.UserDAO(db)
         notas_dao = banco.NoteDAO(db)
         
-        user = user_dao.get_user(username)
+        user = user_dao.get_user_by_id(user_id)
         if not user:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
@@ -21,13 +21,13 @@ async def get_user_notes(username: str, db: Session = Depends(banco.get_db)):
     except Exception as ex:
       raise HTTPException(status_code=500, detail=f"Internal server error. {str(ex)}")
 
-@router.get("/users/{username}/notes/{note_id}", dependencies=[Depends(seguranca.get_current_user)], response_model=entidades.Note)
-async def get_note_by_id(username: str, note_id: str, db: Session = Depends(banco.get_db)):
+@router.get("/users/{user_id}/notes/{note_id}", dependencies=[Depends(seguranca.get_current_user)], response_model=entidades.Note)
+async def get_note_by_id(user_id: int, note_id: str, db: Session = Depends(banco.get_db)):
     try: 
         user_dao = banco.UserDAO(db)
         notas_dao = banco.NoteDAO(db)
         
-        user = user_dao.get_user(username)
+        user = user_dao.get_user_by_id(user_id)
         if not user:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
@@ -39,7 +39,8 @@ async def get_note_by_id(username: str, note_id: str, db: Session = Depends(banc
     except Exception as ex:
       raise HTTPException(status_code=500, detail=f"Internal server error. {str(ex)}")
 
-@router.post("/users/{username}/notes", dependencies=[Depends(seguranca.get_current_user)])
+# TODO: melhorar a referencia do usuario priorizando o id do usuario logado
+@router.post("/users/{user_id}/notes", dependencies=[Depends(seguranca.get_current_user)])
 async def create_note(nova_nota: entidades.NewNote, db: Session = Depends(banco.get_db)):
     try:
         user_dao = banco.UserDAO(db)
@@ -59,7 +60,8 @@ async def create_note(nova_nota: entidades.NewNote, db: Session = Depends(banco.
     except Exception as ex:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Error creating note: {str(ex)}")
 
-@router.post("/users/{username}/notes/{note_id}", dependencies=[Depends(seguranca.get_current_user)])
+# TODO: melhorar a referencia do usuario priorizando o id do usuario logado
+@router.post("/users/{user_id}/notes/{note_id}", dependencies=[Depends(seguranca.get_current_user)])
 async def edit_note(note_id: str, nota_editada: entidades.NewNote, db: Session = Depends(banco.get_db)):
     try:
         user_dao = banco.UserDAO(db)
@@ -79,13 +81,13 @@ async def edit_note(note_id: str, nota_editada: entidades.NewNote, db: Session =
     except Exception as ex:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Error creating note: {str(ex)}")
 
-@router.post("/users/{username}/notes/{note_id}/delete", dependencies=[Depends(seguranca.get_current_user)])
-async def delete_note_by_id(username: str, note_id: str, db: Session = Depends(banco.get_db)):
+@router.post("/users/{user_id}/notes/{note_id}/delete", dependencies=[Depends(seguranca.get_current_user)])
+async def delete_note_by_id(user_id: int, note_id: str, db: Session = Depends(banco.get_db)):
     try: 
         user_dao = banco.UserDAO(db)
         notas_dao = banco.NoteDAO(db)
         
-        user = user_dao.get_user(username)
+        user = user_dao.get_user_by_id(user_id)
         if not user:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 

@@ -2,8 +2,6 @@ from flask import Blueprint, request, session, redirect
 from flask import url_for, flash, render_template
 import requests
 from app import utilidades
-from app import dto
-import json
 
 dashboard_bp = Blueprint('dashboard', __name__)
 
@@ -14,26 +12,25 @@ def dashboard():
 
     try:
         # Retrieve user information from FastAPI app using token
-        access_token = session["access_token"] 
-        headers = {"Authorization": f"Bearer {access_token}"}
-        usuario_logado = session['username']
-        url_router = f"{utilidades.API_URL}/users/{usuario_logado}"
+        headers = {"Authorization": f"Bearer {session['access_token']}"}
+        url_router = f"{utilidades.API_URL}/users/current/{session['username']}"
         response = requests.get(url_router, headers=headers)
     
         if response.status_code == 200:
-            user_data = response.json()            
-            url_route_profile = f"{utilidades.API_URL}/users/{usuario_logado}/profile"
+            user_data = response.json()    
+            session['user_id'] = user_data["id"]       
+            url_route_profile = f"{utilidades.API_URL}/users/{session['user_id']}/profile"
             response_profile = requests.get(url_route_profile, headers=headers)
 
             if response_profile.status_code == 200:
                 user_data_profile = response_profile.json()
                 session['profile_image_url'] = user_data_profile['profile_image_url']
-            return render_template("dashboard/starter.html", user=user_data, usuario = usuario_logado, 
+            return render_template("dashboard/starter.html", user=user_data, usuario = session['username'], 
                 profilePic=session['profile_image_url'], titulo="Dashboard", funcionalidade='Main')
 
         else:
             # Handle error retrieving user information
-            error_message = f"Failed to retrieve user information - {response.status_code}"
+            error_message = f"Failed to retrieve user information in dashboard - {response.status_code}"
             return render_template("error.html", message=error_message)
 
     except requests.exceptions.MissingSchema:
@@ -54,27 +51,25 @@ def show_profile():
         return redirect(url_for("auth.login"))
 
     try:
-        access_token = session["access_token"] 
-        headers = {"Authorization": f"Bearer {access_token}"}
-        usuario_logado = session['username']
-        url_router = f"{utilidades.API_URL}/users/{usuario_logado}"
+        headers = {"Authorization": f"Bearer {session['access_token']}"}
+        url_router = f"{utilidades.API_URL}/users/{session['user_id']}"
         response = requests.get(url_router, headers=headers)
     
         if response.status_code == 200:
-            user_data = response.json()            
-            url_route_profile = f"{utilidades.API_URL}/users/{usuario_logado}/profile"
+            user_data = response.json()
+            url_route_profile = f"{utilidades.API_URL}/users/{session['user_id']}/profile"
             response_profile = requests.get(url_route_profile, headers=headers)
 
             if response_profile.status_code == 200:
                 user_data_profile = response_profile.json()
                 session['profile_image_url'] = user_data_profile['profile_image_url']
                 
-                return render_template("dashboard/profile.html", user=user_data, usuario = usuario_logado, 
+                return render_template("dashboard/profile.html", user=user_data, usuario = session['username'], 
                 profilePic=session['profile_image_url'], titulo="Dashboard", funcionalidade="Profile")
 
         else:
             # Handle error retrieving user information
-            error_message = f"Failed to retrieve user information - {response.status_code}"
+            error_message = f"Failed to retrieve user information in show profile - {response.status_code}"
             return render_template("error.html", message=error_message)
 
     except requests.exceptions.MissingSchema:
@@ -95,10 +90,8 @@ def update_profile_picture():
         return redirect(url_for("auth.login"))
 
     try:
-        access_token = session["access_token"] 
-        headers = {"Authorization": f"Bearer {access_token}"}
-        usuario_logado = session['username']
-        url_router_profile = f"{utilidades.API_URL}/users/{usuario_logado}/profile"
+        headers = {"Authorization": f"Bearer {session['access_token']}"}
+        url_router_profile = f"{utilidades.API_URL}/users/{session['user_id']}/picture"
 
         if request.method == 'POST':
             image = request.files['profile_picture']
@@ -111,7 +104,7 @@ def update_profile_picture():
                 return redirect(url_for("dashboard.dashboard"))
             else:
                 # Handle error retrieving user information
-                error_message = f"Failed to retrieve user information - {response_profile.status_code}"
+                error_message = f"Failed to retrieve user information in update profile picture - {response_profile.status_code}"
                 return render_template("error.html", message=error_message)
 
     except requests.exceptions.MissingSchema:
@@ -132,21 +125,19 @@ def show_page_password():
         return redirect(url_for("auth.login"))
 
     try:
-        access_token = session["access_token"] 
-        headers = {"Authorization": f"Bearer {access_token}"}
-        usuario_logado = session['username']
-        url_router = f"{utilidades.API_URL}/users/{usuario_logado}"
+        headers = {"Authorization": f"Bearer {session['access_token']}"}
+        url_router = f"{utilidades.API_URL}/users/{session['user_id']}"
         response = requests.get(url_router, headers=headers)
-    
+        
         if response.status_code == 200:
             user_data = response.json()            
                 
-            return render_template("dashboard/profile_password.html", user=user_data, usuario = usuario_logado, 
+            return render_template("dashboard/profile_password.html", user=user_data, usuario = session['username'], 
                 profilePic=session['profile_image_url'], titulo="Dashboard", funcionalidade="Password")
 
         else:
             # Handle error retrieving user information
-            error_message = f"Failed to retrieve user information - {response.status_code}"
+            error_message = f"Failed to retrieve user information in show page password - {response.status_code}"
             return render_template("error.html", message=error_message)
 
     except requests.exceptions.MissingSchema:
@@ -167,14 +158,12 @@ def update_profile_password():
         return redirect(url_for("auth.login"))
 
     try:
-        access_token = session["access_token"] 
-        headers = {"Authorization": f"Bearer {access_token}"}
-        usuario_logado = session['username']
-        url_router_password = f"{utilidades.API_URL}/users/{usuario_logado}/password"
+        headers = {"Authorization": f"Bearer {session['access_token']}"}
+        url_router_password = f"{utilidades.API_URL}/users/{session['user_id']}/password"
 
         password = request.form['password_profile']
         confirm_password = request.form['confirm_password_profile']
-        user_password_data = {"username": usuario_logado, "password":password, "confirm_password":confirm_password}
+        user_password_data = {"username": session['username'], "password":password, "confirm_password":confirm_password}
         response_profile_password = requests.post(url_router_password, headers=headers, json=user_password_data)
         
         if response_profile_password.status_code == 200:
@@ -183,7 +172,7 @@ def update_profile_password():
             return redirect(url_for("dashboard.dashboard"))
         else:
             # Handle error retrieving user information
-            error_message = f"Failed to retrieve user information - {response_profile_password.status_code}"
+            error_message = f"Failed to retrieve user information in update profile password - {response_profile_password.status_code}"
             return render_template("error.html", message=error_message)
     except requests.exceptions.MissingSchema:
         error_message = f"URL {url_router_password} inválida"

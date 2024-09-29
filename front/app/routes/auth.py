@@ -18,6 +18,7 @@ def login():
             if response.status_code == 200:
                 data = response.json()
                 session["username"] = username
+                session["user_id"] = None
                 session["access_token"] = data["access_token"]
                 session['profile_image_url'] = None                
                 return redirect(url_for("dashboard.dashboard"))

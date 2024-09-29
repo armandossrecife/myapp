@@ -15,15 +15,13 @@ def my_jobs_graphic():
 
     try:
         # Retrieve user information from FastAPI app using token
-        access_token = session["access_token"] 
-        headers = {"Authorization": f"Bearer {access_token}"}
-        usuario_logado = session['username']
-        url_router = f"{utilidades.API_URL}/users/{usuario_logado}"
+        headers = {"Authorization": f"Bearer {session['access_token']}"}
+        url_router = f"{utilidades.API_URL}/users/{session['user_id']}"
         response = requests.get(url_router, headers=headers)
     
         if response.status_code == 200:
             user_data = response.json()            
-            url_route_myjobs = f"{utilidades.API_URL}/users/{usuario_logado}/jobs"
+            url_route_myjobs = f"{utilidades.API_URL}/users/{session['user_id']}/jobs"
             response_myjobs = requests.get(url_route_myjobs, headers=headers)
 
             if response_myjobs.status_code == 200:
@@ -32,7 +30,7 @@ def my_jobs_graphic():
                 fig = px.timeline(df, x_start="start", x_end="finish", y="task")
                 fig.update_yaxes(autorange="reversed")
                 return render_template('jobs/grafico_jobs.html', graphJSON=fig.to_json(), 
-                            user=user_data, usuario = usuario_logado, tarefas=user_data_jobs,
+                            user=user_data, usuario = session['username'], tarefas=user_data_jobs,
                             profilePic=session['profile_image_url'], titulo="Dashboard", 
                             funcionalidade='Gráfico de Trabalhos (Jobs)')
             else:
@@ -63,25 +61,23 @@ def my_jobs():
 
     try:
         # Retrieve user information from FastAPI app using token
-        access_token = session["access_token"] 
-        headers = {"Authorization": f"Bearer {access_token}"}
-        usuario_logado = session['username']
-        url_router = f"{utilidades.API_URL}/users/{usuario_logado}"
+        headers = {"Authorization": f"Bearer {session['access_token']}"}
+        url_router = f"{utilidades.API_URL}/users/{session['user_id']}"
         response = requests.get(url_router, headers=headers)
     
         if response.status_code == 200:
             user_data = response.json()            
-            url_route_myjobs = f"{utilidades.API_URL}/users/{usuario_logado}/jobs"
+            url_route_myjobs = f"{utilidades.API_URL}/users/{session['user_id']}/jobs"
             response_myjobs = requests.get(url_route_myjobs, headers=headers)
 
             if response_myjobs.status_code == 200:
                 user_data_jobs = response_myjobs.json()
-            return render_template("jobs/lista_jobs.html", user=user_data, usuario = usuario_logado, jobs=user_data_jobs,
+            return render_template("jobs/lista_jobs.html", user=user_data, usuario = session['username'], jobs=user_data_jobs,
                 profilePic=session['profile_image_url'], titulo="Dashboard", funcionalidade='Listar Trabalhos')
 
         else:
             # Handle error retrieving user information
-            error_message = f"Failed to retrieve user information - {response.status_code}"
+            error_message = f"Failed to retrieve user information in jobs - {response.status_code}"
             return render_template("error.html", message=error_message)
 
     except requests.exceptions.MissingSchema:
