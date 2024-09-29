@@ -12,25 +12,23 @@ def my_tasks():
 
     try:
         # Retrieve user information from FastAPI app using token
-        access_token = session["access_token"] 
-        headers = {"Authorization": f"Bearer {access_token}"}
-        usuario_logado = session['username']
-        url_router = f"{utilidades.API_URL}/users/{usuario_logado}"
+        headers = {"Authorization": f"Bearer {session['access_token']}"}
+        url_router = f"{utilidades.API_URL}/users/{session['user_id']}"
         response = requests.get(url_router, headers=headers)
     
         if response.status_code == 200:
             user_data = response.json()            
-            url_route_mytasks = f"{utilidades.API_URL}/users/{usuario_logado}/tasks"
+            url_route_mytasks = f"{utilidades.API_URL}/users/{session['user_id']}/tasks"
             response_mytasks = requests.get(url_route_mytasks, headers=headers)
 
             if response_mytasks.status_code == 200:
                 user_data_tasks = response_mytasks.json()
-            return render_template("tarefas/lista_tarefas.html", user=user_data, usuario = usuario_logado, tarefas=user_data_tasks,
+            return render_template("tarefas/lista_tarefas.html", user=user_data, usuario = session['username'], tarefas=user_data_tasks,
                 profilePic=session['profile_image_url'], titulo="Dashboard", funcionalidade='Listar Tarefas')
 
         else:
             # Handle error retrieving user information
-            error_message = f"Failed to retrieve user information - {response.status_code}"
+            error_message = f"Failed to retrieve user information in tasks - {response.status_code}"
             return render_template("error.html", message=error_message)
 
     except requests.exceptions.MissingSchema:

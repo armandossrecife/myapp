@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app import entidades
-from app import utilidades
 from app import banco
 from app import seguranca
 
