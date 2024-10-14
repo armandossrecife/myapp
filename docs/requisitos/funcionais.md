@@ -16,12 +16,12 @@ A utilização de casos de uso é uma prática comum e eficaz para documentar os
 
 
 ## Casos de Uso
-- [F1 - Login do usuário](x)
-- [F2 - Logout do Usuário](x)
-- [F3 - Registro de Novo Usuário](x)
-- [F4 - Recuperação de Senha do Usuário](X)
-- [F5 - Dashboard do Usuário](X)
-- [F6 - Perfil do Usuário](X)
+- [F1 - Login do usuário](https://github.com/armandossrecife/myapp/blob/main/docs/requisitos/casos_de_uso/f1.md)
+- [F2 - Logout do Usuário](https://github.com/armandossrecife/myapp/blob/main/docs/requisitos/casos_de_uso/f2.md)
+- [F3 - Registro de Novo Usuário](https://github.com/armandossrecife/myapp/blob/main/docs/requisitos/casos_de_uso/f3.md)
+- [F4 - Recuperação de Senha do Usuário](https://github.com/armandossrecife/myapp/blob/main/docs/requisitos/casos_de_uso/f4.md)
+- [F5 - Dashboard do Usuário](https://github.com/armandossrecife/myapp/blob/main/docs/requisitos/casos_de_uso/f5.md)
+- [F6 - Perfil do Usuário](https://github.com/armandossrecife/myapp/blob/main/docs/requisitos/casos_de_uso/f6.md)
 
 ## Outras considerações importantes
 
