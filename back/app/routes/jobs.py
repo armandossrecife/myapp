@@ -3,10 +3,12 @@ from sqlalchemy.orm import Session
 from app import banco
 from app import seguranca
 from app.processamento import jobs as processamento_jobs
+from app import dtos
+from typing import List
 
 router = APIRouter()
 
-@router.get("/users/{user_id}/jobs", dependencies=[Depends(seguranca.get_current_user)])
+@router.get("/users/{user_id}/jobs", dependencies=[Depends(seguranca.get_current_user)], response_model=List[dtos.JobDTO])
 async def get_user_jobs(user_id: int, db: Session = Depends(banco.get_db)):
     try: 
         user_dao = banco.UserDAO(db)

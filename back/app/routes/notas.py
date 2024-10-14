@@ -40,7 +40,7 @@ async def get_note_by_id(user_id: int, note_id: str, db: Session = Depends(banco
       raise HTTPException(status_code=500, detail=f"Internal server error. {str(ex)}")
 
 # TODO: melhorar a referencia do usuario priorizando o id do usuario logado
-@router.post("/users/{user_id}/notes", dependencies=[Depends(seguranca.get_current_user)])
+@router.post("/users/{user_id}/notes", dependencies=[Depends(seguranca.get_current_user)], status_code=status.HTTP_201_CREATED)
 async def create_note(nova_nota: entidades.NewNote, db: Session = Depends(banco.get_db)):
     try:
         user_dao = banco.UserDAO(db)

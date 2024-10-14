@@ -42,7 +42,7 @@ async def get_user_by_id(user_id: int, db: Session = Depends(banco.get_db)):
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found não funcionou....")
   return entidades.User(id=user.id, username=user.username, email=user.email, password="?")
 
-@router.post("/users")
+@router.post("/users", response_model=entidades.User, status_code=status.HTTP_201_CREATED)
 async def create_user(user: entidades.User):
   """ Creates a new user in the database.
   Args:

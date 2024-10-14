@@ -69,7 +69,7 @@ def register():
                 user_data = {"id": 0, "username": username, "email":email, "password": password}
                 url_router = f"{utilidades.API_URL}/users"
                 response = requests.post(url_router, json=user_data)
-                if response.status_code == 200:
+                if response.status_code == 201:
                     mensagem = f"Usuário {username} criado com sucesso!"
                     flash(mensagem, category='success')
                     return redirect(url_for("auth.login"))

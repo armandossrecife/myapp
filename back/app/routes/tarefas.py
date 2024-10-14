@@ -4,10 +4,12 @@ from app import banco
 from app import seguranca
 from app.processamento import tarefas as processamento_tarefas
 from datetime import datetime
+from app import dtos
+from typing import List
 
 router = APIRouter()
 
-@router.get("/users/{user_id}/tasks", dependencies=[Depends(seguranca.get_current_user)])
+@router.get("/users/{user_id}/tasks", dependencies=[Depends(seguranca.get_current_user)], response_model=List[dtos.TarefaDTO])
 async def get_user_tasks(user_id: int, db: Session = Depends(banco.get_db)):
     try: 
         user_dao = banco.UserDAO(db)
