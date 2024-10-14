@@ -33,6 +33,12 @@ A aplicação base terá as seguintes features:
 
 Disponível neste [link](https://github.com/armandossrecife/myapp/blob/main/docs/requisitos/funcionais.md)
 
+## Arquitetura da Solução 
+
+Diagrama de componentes baseado no C4 disponível neste [link](https://github.com/armandossrecife/myapp/blob/main/docs/arquitetura/imagens/diagrama.png)
+
+Source disponível neste [link](https://github.com/armandossrecife/myapp/blob/main/docs/requisitos/diagrama.puml)
+
 ## Esquema de controle de branches
 
 Disponível neste [link](https://github.com/armandossrecife/myapp/blob/main/docs/branches.md)
