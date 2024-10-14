@@ -63,7 +63,7 @@ def nova_nota():
             url_route_new_note = f"{utilidades.API_URL}/users/{session['user_id']}/notes"                
             response_new_note = requests.post(url_route_new_note, headers=headers, json=note_data)
 
-            if response_new_note.status_code == 200:
+            if response_new_note.status_code == 201:
                 user_data_new_data = response_new_note.json()
                 flash(user_data_new_data["message"], 'success')
                 return redirect(url_for("notas.my_notas"))
