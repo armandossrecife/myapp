@@ -35,12 +35,12 @@ Disponível neste [link](https://github.com/armandossrecife/myapp/blob/main/docs
 
 ## Esquema de controle de branches
 
-Disponível neste [link](x)
+Disponível neste [link](https://github.com/armandossrecife/myapp/blob/main/docs/branches.md)
 
 ## Notas de Release
 
-Disponível neste [link](x)
+Disponível neste [link](https://github.com/armandossrecife/myapp/blob/main/docs/releases.md)
 
 ## Bug-fix
 
-Disponível neste [link](x)
+Disponível neste [link](https://github.com/armandossrecife/myapp/blob/main/docs/bugfix.md)
