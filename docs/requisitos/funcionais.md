@@ -23,6 +23,10 @@ A utilização de casos de uso é uma prática comum e eficaz para documentar os
 - [F5 - Dashboard do Usuário](https://github.com/armandossrecife/myapp/blob/main/docs/requisitos/casos_de_uso/f5.md)
 - [F6 - Perfil do Usuário](https://github.com/armandossrecife/myapp/blob/main/docs/requisitos/casos_de_uso/f6.md)
 
+!["Diagrama de Casos de Uso"](https://raw.githubusercontent.com/armandossrecife/myapp/refs/heads/main/docs/requisitos/imagens/diagrama.png)
+
+Source disponível em https://github.com/armandossrecife/myapp/blob/main/docs/requisitos/diagrama.puml
+
 ## Outras considerações importantes
 
 * **Requisitos não funcionais:** Além dos requisitos funcionais (o que o sistema deve fazer), é importante documentar os requisitos não funcionais (como o sistema deve fazer), como desempenho, segurança, usabilidade, etc.
