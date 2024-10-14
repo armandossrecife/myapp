@@ -37,7 +37,7 @@ Disponível neste [link](https://github.com/armandossrecife/myapp/blob/main/docs
 
 Diagrama de componentes baseado no C4 disponível neste [link](https://github.com/armandossrecife/myapp/blob/main/docs/arquitetura/imagens/diagrama.png)
 
-Source disponível neste [link](https://github.com/armandossrecife/myapp/blob/main/docs/requisitos/diagrama.puml)
+Source disponível neste [link](https://github.com/armandossrecife/myapp/blob/main/docs/arquitetura/diagrama.puml)
 
 ## Esquema de controle de branches
 
