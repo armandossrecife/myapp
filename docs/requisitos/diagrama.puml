@@ -1,0 +1,23 @@
+@startuml
+skinparam actorStyle awesome
+
+' Actor definition
+actor Usuario
+
+' Usecase definition
+usecase (Registro) as uc_register
+usecase (Login) as uc_login
+usecase (Logout) as uc_logout
+usecase (Esqueci \na Senha) as uc_password_recover
+usecase (Meu Perfil) as uc_my_profile
+usecase (Dashboard \nUsuario) as uc_dashboard_user
+
+uc_register <- Usuario
+Usuario -> uc_password_recover
+Usuario --> uc_login
+uc_login --> uc_dashboard_user
+
+uc_dashboard_user --> uc_logout
+uc_dashboard_user -left-> uc_my_profile
+
+@enduml
