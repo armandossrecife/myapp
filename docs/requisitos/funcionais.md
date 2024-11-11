@@ -38,7 +38,7 @@ Source disponível em https://github.com/armandossrecife/myapp/blob/main/docs/re
 
 * **Seja claro e conciso:** Evite ambiguidades e termos técnicos que não sejam conhecidos por todos os envolvidos no projeto.
 * **Utilize exemplos:** Exemplos práticos ajudam a ilustrar os requisitos e facilitam a compreensão.
-* **Involva os usuários:** Os usuários finais são os principais interessados no sistema, por isso, é fundamental que eles participem da elaboração dos requisitos.
+* **Envolva os usuários:** Os usuários finais são os principais interessados no sistema, por isso, é fundamental que eles participem da elaboração dos requisitos.
 * **Utilize ferramentas de modelagem:** Ferramentas de modelagem visual podem auxiliar na criação de diagramas de casos de uso e na visualização da arquitetura do sistema.
 
 **Conclusão:**
